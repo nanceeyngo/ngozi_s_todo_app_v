@@ -8,11 +8,12 @@ plugins {
 android {
     namespace = "com.example.ngozi_s_todo_app_v"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "29.0.13846066"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -41,4 +42,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // ✅ Kotlin DSL requires function call syntax
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
