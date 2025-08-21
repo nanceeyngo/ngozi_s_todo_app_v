@@ -144,3 +144,21 @@ final s24w700 = GoogleFonts.openSans(
     fontSize: 24,
     fontWeight: FontWeight.w700
 );
+
+//font size 26
+final s26w400 = GoogleFonts.openSans(
+    fontSize: 26,
+    fontWeight: FontWeight.w400
+);
+final s26w500 = GoogleFonts.openSans(
+    fontSize: 26,
+    fontWeight: FontWeight.w500
+);
+final s26w600 = GoogleFonts.openSans(
+    fontSize: 26,
+    fontWeight: FontWeight.w600
+);
+final s26w700 = GoogleFonts.openSans(
+    fontSize: 26,
+    fontWeight: FontWeight.w700
+);
