@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ngozi_s_todo_app_v/todo_routes.dart';
 
+import 'bindings.dart';
+
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
 
@@ -11,7 +13,7 @@ class TodoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: ToDoRoutes.getRoutes(),
       initialRoute: '/',
-      //initialBinding: TodDoBindings(),
+      initialBinding: TodDoBindings(),
     );
   }
 }

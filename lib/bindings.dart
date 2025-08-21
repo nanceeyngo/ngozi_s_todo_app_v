@@ -8,7 +8,8 @@ import 'package:ngozi_s_todo_app_v/todo_app/services/todo_notification_service.d
 class TodDoBindings extends Bindings{
   @override
   void dependencies() {
-    // TODO: implement dependencies
+    _injectRepository();
+    _injectController();
   }
 
   // Future<void> _initHive() async{
@@ -23,11 +24,11 @@ class TodDoBindings extends Bindings{
     );
   }
 
-  Future<void> _injectNotificationService() async{
-    final notificationService = TodoNotificationServiceImpl();
-    await notificationService.init();
-    Get.put<TodoNotificationService>(notificationService, permanent: true);
-  }
+  // Future<void> _injectNotificationService() async{
+  //   final notificationService = TodoNotificationServiceImpl();
+  //   await notificationService.init();
+  //   Get.put<TodoNotificationService>(notificationService, permanent: true);
+  // }
 
   void _injectController(){
     Get.lazyPut<TodoController>(
