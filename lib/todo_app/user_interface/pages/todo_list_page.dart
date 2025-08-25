@@ -20,16 +20,37 @@ class TodoListPage extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Obx((){
-        final todos = controller.topLevelTodos();
-        if(todos.isEmpty) {
-          return Center(child: Text('No todos yet',
-            style: s26w700.copyWith(color: AppColors.textPrimary),),);
-        }
-        return ListView(
-          children: todos.map((todo) => TodoTile(todo: todo)).toList(),
-        );
-      }),
+      body: Column(
+        children: [
+          Text('My Tasks',
+              style: s30w700.copyWith(color: AppColors.textPrimary)),
+          Expanded(
+            child: Obx((){
+                  final todos = controller.topLevelTodos();
+                  if(todos.isEmpty) {
+                    return Center(child: Text('No TODOs yet',
+                      style: s26w700.copyWith(color: AppColors.textPrimary),),);
+                  }
+                  return Container(
+                    margin: EdgeInsets.only(top: 30),
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryDark,
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: ListView.builder(
+                      itemCount: todos.length,
+                      itemBuilder: (context, index){
+                        return TodoTile(todo: todos[index]);
+                      }
+                    ),
+                  );
+                  //Alternatively use listview -ListView(children: todos.map((todo) => TodoTile(todo: todo)).toList(),)
+                }),
+          ),
+        ],
+      ),
+
       floatingActionButton: FloatingActionButton(
           onPressed: () => Get.toNamed('/add_todo'),
         child: Icon(Icons.add, size: 36, color: AppColors.textPrimary,),

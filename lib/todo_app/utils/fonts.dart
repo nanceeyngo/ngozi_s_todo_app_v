@@ -162,3 +162,39 @@ final s26w700 = GoogleFonts.openSans(
     fontSize: 26,
     fontWeight: FontWeight.w700
 );
+
+//font size 28
+final s28w400 = GoogleFonts.openSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w400
+);
+final s28w500 = GoogleFonts.openSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w500
+);
+final s28w600 = GoogleFonts.openSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w600
+);
+final s28w700 = GoogleFonts.openSans(
+    fontSize: 28,
+    fontWeight: FontWeight.w700
+);
+
+//font size 30
+final s30w400 = GoogleFonts.openSans(
+    fontSize: 30,
+    fontWeight: FontWeight.w400
+);
+final s30w500 = GoogleFonts.openSans(
+    fontSize: 30,
+    fontWeight: FontWeight.w500
+);
+final s30w600 = GoogleFonts.openSans(
+    fontSize: 30,
+    fontWeight: FontWeight.w600
+);
+final s30w700 = GoogleFonts.openSans(
+    fontSize: 30,
+    fontWeight: FontWeight.w700
+);

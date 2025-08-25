@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:ngozi_s_todo_app_v/todo_app/controllers/add_todo_controller.dart';
+import 'package:ngozi_s_todo_app_v/todo_app/controllers/mock_controller.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/controllers/todo_controller.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/repositories/todo_repository.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/services/todo_notification_service.dart';
@@ -8,8 +10,10 @@ import 'package:ngozi_s_todo_app_v/todo_app/services/todo_notification_service.d
 class TodDoBindings extends Bindings{
   @override
   void dependencies() {
+    _injectMockController();
     _injectRepository();
     _injectController();
+    _injectAddTodoController();
   }
 
   // Future<void> _initHive() async{
@@ -39,6 +43,17 @@ class TodDoBindings extends Bindings{
         ),
         fenix: true
     );
+  }
+
+  void _injectAddTodoController(){
+    Get.lazyPut<AddTodoController>(
+        () => AddTodoControllerImpl(),
+      fenix: true
+    );
+  }
+  
+  void _injectMockController(){
+    Get.lazyPut(() => MockTodoController());
   }
 
 }
