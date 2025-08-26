@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/controllers/todo_controller.dart';
+import 'package:ngozi_s_todo_app_v/todo_app/user_interface/widgets/delete_alert_dialog.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/user_interface/widgets/todo_tile.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/utils/colors.dart';
 import '../../utils/fonts.dart';
@@ -22,8 +23,34 @@ class TodoListPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Text('My Tasks',
-              style: s30w700.copyWith(color: AppColors.textPrimary)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('My Tasks',
+                    style: s30w700.copyWith(color: AppColors.textPrimary)),
+                IconButton(
+                    onPressed: () async{
+                      final confirmed = await Get.dialog(
+                        DeleteAlertDialog(
+                            title: 'Delete all Todos',
+                            content: 'Are you sure you want to delete all Todos?'
+                        )
+                      );
+                      if (confirmed == true) {
+                        await controller.deleteAll();
+                        Get.snackbar("Deleted", "All Todos deleted",
+                          // backgroundColor: AppColors.error,
+                          // colorText: AppColors.surface
+                        );
+                      }
+                    },
+                    icon: Icon(Icons.delete, size: 30, color: AppColors.primaryDark,)
+                )
+              ],
+            ),
+          ),
           Expanded(
             child: Obx((){
                   final todos = controller.topLevelTodos();

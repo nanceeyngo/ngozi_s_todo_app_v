@@ -38,5 +38,27 @@ class Todo{
     return deadline!.subtract(reminderBefore!);
   }
 
+  Todo copyWith({
+    String? id,
+    String? title,
+    String? description,
+    DateTime? deadline,
+    Duration? reminderBefore,
+    String? parentId,
+    List<String>? subTodoIds,
+    bool? done,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      deadline: deadline ?? this.deadline,
+      reminderBefore: reminderBefore ?? this.reminderBefore,
+      parentId: parentId ?? this.parentId,
+      subTodoIds: subTodoIds ?? List.from(this.subTodoIds),
+      done: done ?? this.done,
+    );
+  }
+
 
 }

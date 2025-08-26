@@ -6,7 +6,6 @@ class ToDoRoutes{
     return[
       GetPage(name: '/', page: () => TodoListPage()),
       GetPage(name: '/add_todo', page: () => AddTodoPage()),
-      GetPage(name: '/edit_todo', page: () => EditTodoPage()),
       GetPage(name: '/todo_details', page: () => TodoDetailsPage())
     ];
   }

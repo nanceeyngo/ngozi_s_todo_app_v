@@ -13,11 +13,15 @@ class AddTodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final args = Get.arguments as Map<String, dynamic>?;
+    final Todo? parent = args?['parent'];
+
     final controller = Get.find<TodoController>();
     final addTodoController = Get.find<AddTodoController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Todo',
+        title: Text(parent == null? 'Add Todo' : 'Add SubTodo',
           style: s26w700.copyWith(color: AppColors.textPrimary),)
       ),
       body: FocusScope(
@@ -98,29 +102,63 @@ class AddTodoPage extends StatelessWidget {
                 )),
                 SizedBox(height: 20,),
                 Obx((){
-                  final currentReminder = addTodoController.reminder.value;
-                  return Row(
-                    children: [
-                      Text('Remind me', style: s18w400),
-                      Expanded(
-                          child: Slider(
-                              min: 0,
-                              max: 180,
-                              divisions: 12,
-                              label: currentReminder == null || currentReminder.inMinutes == 0 ?
-                              'Off' : '${currentReminder.inMinutes} min before',
-                              value: (currentReminder?.inMinutes ?? 0).toDouble(),
-                              onChanged: addTodoController.deadline.value == null? null
-                                  : (v) {
-                                final minutes = v.toInt();
-                                addTodoController.reminder.value = minutes == 0? null
-                                    : Duration(minutes: minutes);
-                              }
-                          )
-                      )
-                    ],
+                  return DropdownButton<Duration?>(
+                      value: addTodoController.reminder.value,
+                      items: addTodoController.reminderOptions
+                      .map((option) => DropdownMenuItem(
+                          value: option,
+                          child: Text(addTodoController.formatReminder(option))
+                      )).toList(),
+                      onChanged: addTodoController.deadline.value == null? null
+                        : (v) => addTodoController.reminder.value = v,
                   );
-                })
+                }),
+                SizedBox(height: 20,),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final result = await addTodoController.save(
+                          controller, parent: parent);
+
+                      final success = result["success"] as bool;
+                      final updated = result["updated"] as bool;
+                      final isSub = result["isSub"] as bool;
+
+                      if (!success) {
+                        Get.snackbar(
+                          "Error",
+                          "Title cannot be empty",
+                          backgroundColor: Colors.red.shade400,
+                          colorText: Colors.white,
+                        );
+                        return;
+                      }
+                      if (isSub) {
+                        if (updated) {
+                          Get.snackbar(
+                              "Updated", "Sub todo updated successfully");
+                        } else {
+                          Get.snackbar("Added", "Sub todo added successfully");
+                        }
+                      } else {
+                        if (updated) {
+                          Get.snackbar("Updated", "Todo updated successfully");
+                        } else {
+                          Get.snackbar("Added", "Todo added successfully");
+                        }
+                      }
+                    }catch(e){
+                      Get.snackbar(
+                        "Error",
+                        e.toString(),
+                        backgroundColor: AppColors.error,
+                        colorText: AppColors.surface,
+                      );
+                    }
+                  },
+                  child: Text(parent == null? "Save Todo" : "Save Sub Todo",
+                      style: s18w700.copyWith(color: AppColors.primaryDark)),
+                )
               ],
             ),
           ),
