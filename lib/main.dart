@@ -3,19 +3,24 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ngozi_s_todo_app_v/todo_app.dart';
 import 'package:ngozi_s_todo_app_v/todo_app/services/todo_notification_service.dart';
+import 'package:ngozi_s_todo_app_v/todo_app/services/workmanage_guard.dart';
+
 
 void main() async {
 
-  WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await Hive.initFlutter();
-  await Hive.openBox('todos');
+    await Hive.initFlutter();
+    await Hive.openBox('todos');
 
-  final notificationService = TodoNotificationServiceImpl();
-  await notificationService.init();
+    // Initialize WorkManager (native) once per app start
+    await WorkmanagerGuard.ensureInitialized();
 
-  Get.put<TodoNotificationService>(notificationService, permanent: true);
+    final notificationService = TodoNotificationServiceImpl();
+    await notificationService.init();
 
-  runApp(const TodoApp());
+    Get.put<TodoNotificationService>(notificationService, permanent: true);
+
+    runApp(const TodoApp());
 }
 

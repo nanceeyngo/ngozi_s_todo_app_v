@@ -62,10 +62,15 @@ class TodoControllerImpl extends GetxController implements TodoController{
     //cancel then schedule afresh --to avoid duplicating scheduling
     // await _notificationService.cancelReminderForTodo(todo);
     // if(!todo.done) await _notificationService.scheduleReminderForTodo(todo);
-    try {
+    try{
       // Cancel any existing reminder first
       await _notificationService.cancelReminderForTodo(todo);
 
+    }catch(e){
+      throw Exception('Error cancelling WorkManager task: $e');
+    }
+
+    try {
       // Only schedule if todo is not done, has a deadline, and reminder is valid
       if (!todo.done && todo.deadline != null && todo.reminderBefore != null) {
         final reminderTime = todo.deadline!.subtract(todo.reminderBefore!);
@@ -275,5 +280,32 @@ class TodoControllerImpl extends GetxController implements TodoController{
   bool canHaveChildren(Todo todo) {
     return todo.parentId == null; // only top-level todos can have children
   }
+
+  // @override
+  // Future<void> someMethod() async {
+  //   // Debug notifications here
+  //   print('Testing notifications...');
+  //
+  //   try {
+  //     await _notificationService.showImmediateNotification('Debug', 'Testing now');
+  //     print('✅ Immediate notification sent');
+  //   } catch (e) {
+  //     print('❌ Immediate notification failed: $e');
+  //   }
+  //
+  //   try {
+  //     final enabled = await _notificationService.areNotificationsEnabled();
+  //     print('✅ Notifications enabled: $enabled');
+  //   } catch (e) {
+  //     print('❌ Permission check failed: $e');
+  //   }
+  //
+  //   try {
+  //     await _notificationService.listPendingNotifications();
+  //     print('✅ Listed pending notifications');
+  //   } catch (e) {
+  //     print('❌ List pending failed: $e');
+  //   }
+  // }
 
 }
